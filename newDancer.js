@@ -116,6 +116,29 @@ function basePoints(d,start,a,s,cy){
   }return obj
 }
 
+function basePointsV(d,obj1,obj2){
+
+  var small = [1,2,3,4];
+  var obj = {
+    p: obj1.p,
+    x: obj1.x,
+    y: obj1.y,
+    dif: [],
+    use: [],
+    m: [],
+    b: []
+  }
+
+  for(i=0;i<small.length;i++){
+    obj.dif.push(obj2.x[i]-obj1.x[i]);
+    obj.use.push(obj.dif[i]/d);
+    obj.m.push((obj2.y[i]-obj1.y[i])/(obj2.x[i]-obj1.x[i]));
+    obj.b.push(obj.y[i]-(obj.m[i]*obj.x[i]))
+  }
+
+
+  return obj
+}
 //     first: {
 //       x1: [],
 //       y1: [],
@@ -184,8 +207,13 @@ var realUse = radUse/4;
 var e2 = 1/a2;
 var e1 = 1/a1;
 
-var obj = basePoints(d,start,a1,s1,cy1);
-console.log(obj)
+var obj1 = basePoints(d,start,a1,s1,cy1);
+var obj2 = basePoints(d,start,a2,s2,cy2);
+// console.log(obj1)
+// console.log(obj2)
+
+var v = basePointsV(d,obj1,obj2);
+console.log(v)
 
 
 
