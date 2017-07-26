@@ -20,6 +20,10 @@ function backNumbers (start, end, n){
   } return arr
 }
 
+function cot (x) {
+  return 1/Math.tan(x)
+}
+
 function sin (x) {
   return Math.sin(x)
 }
@@ -42,81 +46,6 @@ function acos (x) {
 
 function atan (x) {
   return Math.atan(x)
-}
-
-
-
-function equalOut(arr1,arr2){
-
-  var obj = {
-    arr1: arr1.map(a => a),
-    arr2: arr2.map(a => a)
-  }
-
-   var obj = {
-    arr1: arr1.map(function(item, i) {
-      return item
-    }),
-    arr2: arr2.map(function(item, i) {
-      return item
-    })
-  }
-
-  if(obj.arr1.length > obj.arr2.length){
-    var length = obj.arr1.length;
-    var toCopy = obj.arr2[obj.arr2.length-1];
-    for(i=0;i<length;i++){
-      if(obj.arr2[i] == undefined){
-        obj.arr2.push(toCopy);
-      }
-    }
-  } else{
-    var length = obj.arr2.length;
-    var toCopy = obj.arr1[obj.arr1.length-1];
-    for(i=0;i<length;i++){
-      if(obj.arr1[i] == undefined){
-        obj.arr1.push(toCopy);
-      }
-    }
-  }
-  return obj
-}
-
-
-function zeros(d){
-  var arr = [];
-  for(i=0;i<d+1;i++){
-    arr.push(0);
-  }return arr
-}
-
-function baseY(L,LUse,numbers,minus){
-  var arr = [];
-  for(i=0;i<numbers.length;i++){
-    arr.push((L-(LUse*numbers[i]))-minus);
-  }return arr
-}
-
-function firstRight(x,y,sin,cos,put){
-  var obj = {
-    x: [],
-    y: []
-  }
-  for(i=0;i<x.length;i++){
-    obj.x.push((x[i]*cos)+(y[i]*sin));
-    obj.y.push(((-x[i]*sin)+(y[i]*cos))-put);
-  }return obj
-}
-
-function firstLeft(x,y,sin,cos,put){
-  var obj = {
-    x: [],
-    y: []
-  }
-  for(i=0;i<x.length;i++){
-    obj.x.push((x[i]*-cos)+(y[i]*-sin));
-    obj.y.push(((x[i]*-sin)-(y[i]*-cos))-put);
-  }return obj
 }
 
 
@@ -149,55 +78,99 @@ function strip(topRatio,sidex,sidey){
   }return obj
 }
 
-function makeTop(topLength,rightx,righty,leftx,lefty,middlex,middley){
+
+function basePoints(d,start,a,s,cy){
+  var radUse = radians(360)/d;
+  var e = 1/a;
+  var small = [1,2,3,4];
   var obj = {
-    left: {
-      x: [],
-      y: []
-    },
-    middle: {
-      x: [],
-      y: []
-    },
-    right: {
-      x: [],
-      y: []
-    }
+    p: [],
+    x: [],
+    y: [],
+    dif: [],
+    use: [],
+    m: [],
+    b: []
   }
-  for(i=0;i<topLength;i++){
-    obj.right.x.push(rightx[i]);
-    obj.right.y.push(righty[i]);
-    obj.left.x.push(leftx[i]);
-    obj.left.y.push(lefty[i]);
-    obj.middle.x.push(middlex[i]);
-    obj.middle.y.push(middley[i]);
+
+  for(i=0;i<small.length;i++){
+    obj.p.push(radians(start)+(radUse*((d/4)*small[i])));
+    obj.x.push(s*sin(obj.p[i]));
+    obj.y.push(((cos(obj.p[i])*e)+cy)*s);
+  }
+
+  for(i=0;i<small.length;i++){
+
+    if(i<3){
+      obj.dif.push(obj.x[i+1]-obj.x[i]);
+      obj.m.push((obj.y[i+1]-obj.y[i])/(obj.x[i+1]-obj.x[i]));
+    }else{
+      obj.dif.push(obj.x[0]-obj.x[i]);
+      obj.m.push((obj.y[0]-obj.y[i])/(obj.x[0]-obj.x[i]));
+    }
+
+    obj.use.push(obj.dif[i]/d);
+    obj.b.push(obj.y[i]-(obj.m[i]*obj.x[i]));
+
   }return obj
 }
 
-function makeBottom(gap,rightx,righty,leftx,lefty,middlex,middley){
+function basePointsV(d,obj1,obj2){
+
+  var small = [1,2,3,4];
   var obj = {
-    left: {
-      x: [],
-      y: []
-    },
-    middle: {
-      x: [],
-      y: []
-    },
-    right: {
-      x: [],
-      y: []
-    }
+    p: obj1.p,
+    x: obj1.x,
+    y: obj1.y,
+    dif: [],
+    use: [],
+    m: [],
+    b: []
   }
-  for(i=gap;i<middley.length;i++){
-    obj.right.x.push(rightx[i]);
-    obj.right.y.push(righty[i]);
-    obj.left.x.push(leftx[i]);
-    obj.left.y.push(lefty[i]);
-    obj.middle.x.push(middlex[i]);
-    obj.middle.y.push(middley[i]);
-  }return obj
+
+  for(i=0;i<small.length;i++){
+    obj.dif.push(obj2.x[i]-obj1.x[i]);
+    obj.use.push(obj.dif[i]/d);
+    obj.m.push((obj2.y[i]-obj1.y[i])/(obj2.x[i]-obj1.x[i]));
+    obj.b.push(obj.y[i]-(obj.m[i]*obj.x[i]))
+  } return obj
 }
+
+function points(objIn,d,start){
+  var arr = numbers (0, d, 1);
+  var obj = {
+    x1: [],
+    y1: [],
+    x2: [],
+    y2: [],
+    x3: [],
+    y3: [],
+    x4: [],
+    y4: []
+  }
+
+  for(j=0;j<arr.length;j++){
+   obj.x1.push(objIn.x[0] + (objIn.use[0]*arr[j]));
+   obj.y1.push(objIn.b[0] + (objIn.m[0]*obj.x1[j]));
+  }
+  for(j=0;j<arr.length;j++){
+   obj.x2.push(objIn.x[1] + (objIn.use[1]*arr[j]));
+   obj.y2.push(objIn.b[1] + (objIn.m[1]*obj.x2[j]));
+  }
+  for(j=0;j<arr.length;j++){
+   obj.x3.push(objIn.x[2] + (objIn.use[2]*arr[j]));
+   obj.y3.push(objIn.b[2] + (objIn.m[2]*obj.x3[j]));
+  }
+  for(j=0;j<arr.length;j++){
+   obj.x4.push(objIn.x[3] + (objIn.use[3]*arr[j]));
+   obj.y4.push(objIn.b[3] + (objIn.m[3]*obj.x4[j]));
+  }
+  return obj
+}
+
+
+
+
 
 
 //**********************END FUNCTIONS*********************
@@ -229,193 +202,159 @@ function makeBottom(gap,rightx,righty,leftx,lefty,middlex,middley){
 //******************************************************************************************************************
 //******************************************************************************************************************
 //*************GLOBAL VARS******************************************************************************************
+//var turn = 47.24137;
+var d = 50;
+var start = 100;
+var a1 = 2;
+var a2 = 2;
+var s1 = 1;
+var s2 = .8;
+var cy1 = 5;
+var cy2 = 4;
+
+var a3 = 2;
+var a4 = 2;
+var s3 = .75;
+var s4 = .2;
+var cy3 = 3.5;
+var cy4 = 2;
+
+
+var radUse = radians(360)/d;
+var realUse = radUse/4;
+var e2 = 1/a2;
+var e1 = 1/a1;
+var e3 = 1/a3;
+var e4 = 1/a4;
+
+var num = numbers (0, d, 1)
+var obj1 = basePoints(d,start,a1,s1,cy1);
+var obj2 = basePoints(d,start,a2,s2,cy2);
+var objv = basePointsV(d,obj1,obj2);
+
+var obj3 = basePoints(d,start,a3,s3,cy3);
+var obj4 = basePoints(d,start,a4,s4,cy4);
+var objv2 = basePointsV(d,obj3,obj4);
+
+var obj = {
+  big: points(obj1,d,start),
+  small: points(obj2,d,start),
+  vertical: points(objv,d,start)
+}
+
+var obj2 = {
+  big: points(obj3,d,start),
+  small: points(obj4,d,start),
+  vertical: points(objv2,d,start)
+}
+
+//console.log(obj2)
+
 var finalCount = 0;
-var extra = 'blinewidth .5 all' + '\n' + 'drawframe no' + '\n' + 'asetticks x no' + '\n' + 'asetticks y no' + '\n' + 'asetminticks x no' + '\n' + 'asetminticks y no' + '\n' +'framewidth 0' + '\n' + 'bstyle yes no no no no no no yes no no 0' + '\n' + 'margins 0 0 0 0' + '\n' + 'range x -1.2 1.2' + '\n' + 'range y -1.2 1.2';
-
-
-var d = 300;
-var L = 1;
-var put = .5;
-var firstT = radians(5);
-var tPeak = radians(70);
-var f = 1;
-var topRatio = Math.round(d/6);
-var topLength = topRatio;
-var gap = topRatio+(topRatio/2);
-
-
-var radUse = radians(90)/d;
-var LUse = L/d;
-
-
-var baseObj = {
-  middle: {
-    x: [],
-    y: []
-  },
-  side: {
-    x: [],
-    y: []
-  }
-}
-
-baseObj.middle.x = zeros(d);
-baseObj.side.x = zeros(d);
-baseObj.middle.y = baseY(L,LUse,numbers(0,d,1),0);
-baseObj.side.y = baseY(L,LUse,numbers(0,d,1),0);
-
-
-var firstObj = {
-  left: {
-    x: [],
-    y: []
-  },
-  middle: {
-    x: [],
-    y: []
-  },
-  right: {
-    x: [],
-    y: []
-  }
-}
-
-firstObj.middle.x = zeros(d);
-firstObj.middle.y = baseY(L,LUse,numbers(0,d,1),put);
-firstObj.right.x = firstRight(baseObj.side.x,baseObj.side.y,sin(firstT),cos(firstT),put).x;
-firstObj.right.y = firstRight(baseObj.side.x,baseObj.side.y,sin(firstT),cos(firstT),put).y;
-firstObj.left.x = firstLeft(baseObj.side.x,baseObj.side.y,sin(firstT),cos(firstT),put).x;
-firstObj.left.y = firstLeft(baseObj.side.x,baseObj.side.y,sin(firstT),cos(firstT),put).y;
-
-
-var secondObj = {
-  left: {
-    x: [],
-    y: []
-  },
-  middle: {
-    x: [],
-    y: []
-  },
-  right: {
-    x: [],
-    y: []
-  }
-}
-
-//putting in full lines
-secondObj.middle.x = secondTwist(firstObj.middle.x,firstObj.middle.y,fancy(backNumbers (d, 0, radUse),f,tPeak)).x;
-secondObj.middle.y = secondTwist(firstObj.middle.x,firstObj.middle.y,fancy(backNumbers (d, 0, radUse),f,tPeak)).y;
-secondObj.left.x = secondTwist(firstObj.left.x,firstObj.left.y,fancy(backNumbers (d, 0, radUse),f,tPeak)).x;
-secondObj.left.y = secondTwist(firstObj.left.x,firstObj.left.y,fancy(backNumbers (d, 0, radUse),f,tPeak)).y;
-secondObj.right.x = secondTwist(firstObj.right.x,firstObj.right.y,fancy(backNumbers (d, 0, radUse),f,tPeak)).x;
-secondObj.right.y = secondTwist(firstObj.right.x,firstObj.right.y,fancy(backNumbers (d, 0, radUse),f,tPeak)).y;
-
-
-//striping away top ratio
-secondObj.left.x = strip(topRatio,secondObj.left.x,secondObj.left.y).x;
-secondObj.left.y = strip(topRatio,secondObj.left.x,secondObj.left.y).y;
-secondObj.right.x = strip(topRatio,secondObj.right.x,secondObj.right.y).x;
-secondObj.right.y = strip(topRatio,secondObj.right.x,secondObj.right.y).y;
-//equaling out with middle length
-secondObj.left.x = equalOut(secondObj.middle.x,secondObj.left.x).arr2;
-secondObj.left.y = equalOut(secondObj.middle.y,secondObj.left.y).arr2;
-secondObj.right.x = equalOut(secondObj.middle.x,secondObj.right.x).arr2;
-secondObj.right.y = equalOut(secondObj.middle.y,secondObj.right.y).arr2;
-
-//console.log(secondObj);
-
-
-var lastObj = {
-  topLeft: {
-    x: [],
-    y: []
-  },
-  topMiddle: {
-    x: [],
-    y: []
-  },
-  topRight: {
-    x: [],
-    y: []
-  },
-  bottomLeft: {
-    x: [],
-    y: []
-  },
-  bottomMiddle: {
-    x: [],
-    y: []
-  },
-  bottomRight: {
-    x: [],
-    y: []
-  }
-}
-
-var toppedObj = makeTop(topLength,secondObj.right.x,secondObj.right.y,secondObj.left.x,secondObj.left.y,secondObj.middle.x,secondObj.middle.y);
-
-lastObj.topLeft.x = toppedObj.left.x;
-lastObj.topLeft.y = toppedObj.left.y;
-lastObj.topRight.x = toppedObj.right.x;
-lastObj.topRight.y = toppedObj.right.y;
-lastObj.topMiddle.x = toppedObj.middle.x;
-lastObj.topMiddle.y = toppedObj.middle.y;
-
-var bottomObj = makeBottom(gap,secondObj.right.x,secondObj.right.y,secondObj.left.x,secondObj.left.y,secondObj.middle.x,secondObj.middle.y);
-
-lastObj.bottomLeft.x = bottomObj.left.x;
-lastObj.bottomLeft.y = bottomObj.left.y;
-lastObj.bottomRight.x = bottomObj.right.x;
-lastObj.bottomRight.y = bottomObj.right.y;
-lastObj.bottomMiddle.x = bottomObj.middle.x;
-lastObj.bottomMiddle.y = bottomObj.middle.y;
-
-
-
-
-//console.log(lastObj)
-
-
-
-
-
-
-
-
-
+var extra = 'blinewidth 2 all' + '\n' + 'drawframe no' + '\n' + 'asetticks x no' + '\n' + 'asetticks y no' + '\n' + 'asetminticks x no' + '\n' + 'asetminticks y no' + '\n' +'framewidth 0' + '\n' + 'bstyle yes no no no no no no yes no no 0' + '\n' + 'margins 0 0 0 0' + '\n' + 'range x -10 10' + '\n' + 'range y -10 10';
 var buffer = 'newbuffer' + '\n';
 var text = '';
-var putRight = .2;
-var putLeft = .8;
 
-  function plot(side,x1,y1,x2,y2){
+function plot(side,x1,y1,x2,y2){
 
-     //1 = white
-     //0 = black
+   //1 = white
+   //0 = black
+   var color;
+   if(side == 1){
+     color = .2;
+   }
+   if(side == 2){
+     color = .4;
+   }
+   if(side == 3){
+     color = .6;
+   }
+   if(side == 4){
+     color = .8;
+   }
+   if(side == 5){
+     color = 0;
+   }
 
-     for(i=0;i<x1.length;i++){
+   for(i=0;i<x1.length;i++){
 
-        buffer += 'newbuffer' + '\n';
-        text += 'addvalue ' + finalCount + ' ' + x1[i] + ' ' + y1[i] + '\n';
-        text += 'addvalue ' + finalCount + ' ' + x2[i] + ' ' + y2[i] + '\n';
-        if(side == 'r'){
-          text += 'bcolor ' + putRight + ' ' + putRight + ' ' + putRight + ' ' + finalCount + '\n'
-        }else{
-          text += 'bcolor ' + putLeft + ' ' + putLeft + ' ' + putLeft + ' ' + finalCount + '\n'
-        }
+      buffer += 'newbuffer' + '\n';
+      text += 'addvalue ' + finalCount + ' ' + x1[i] + ' ' + y1[i] + '\n';
+      text += 'addvalue ' + finalCount + ' ' + x2[i] + ' ' + y2[i] + '\n';
+      text += 'bcolor ' + color + ' ' + color + ' ' + .5 + ' ' + finalCount + '\n'
+
+      finalCount++
+   }
+}
+
+// if(start>=0 && start<90){
+//   plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
+//   plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
+//   plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
+//   plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
+//   plot(5,obj2.big.x3,obj2.big.y3,obj2.big.x1,obj2.big.y1);
+//   //plot(5,obj2.big.x2,obj2.big.y2,obj2.big.x4,obj2.big.y4);
+// }
+// if(start>=90 && start<180){
+//   plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
+//   plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
+//   plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
+//   plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
+//   plot(5,obj2.big.x3,obj2.big.y3,obj2.big.x1,obj2.big.y1);
+//  // plot(5,obj2.big.x2,obj2.big.y2,obj2.big.x4,obj2.big.y4);
+// }
+// if(start>=180 && start<270){
+//   plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
+//   plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
+//   plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
+//   plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
+//   plot(5,obj2.big.x3,obj2.big.y3,obj2.big.x1,obj2.big.y1);
+//   //plot(5,obj2.big.x2,obj2.big.y2,obj2.big.x4,obj2.big.y4);
+// }
+// if(start>=270 && start<360){
+//   plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
+//   plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
+//   plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
+//   plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
+//   plot(5,obj2.big.x3,obj2.big.y3,obj2.big.x1,obj2.big.y1);
+//   //plot(5,obj2.big.x2,obj2.big.y2,obj2.big.x4,obj2.big.y4);
+// }
 
 
-        finalCount++
-     }
-  }
+if(start>=0 && start<90){
+  plot(1,obj.big.x1,obj.big.y1,obj.small.x1,obj.small.y1);
+  plot(2,obj.big.x2,obj.big.y2,obj.small.x2,obj.small.y2);
+  plot(3,obj.big.x3,obj.big.y3,obj.small.x3,obj.small.y3);
+  plot(4,obj.big.x4,obj.big.y4,obj.small.x4,obj.small.y4);
+  plot(5,obj.small.x3,obj.small.y3,obj.small.x1,obj.small.y1);
+  plot(5,obj.small.x2,obj.small.y2,obj.small.x4,obj.small.y4);
+}
+if(start>=90 && start<180){
+  plot(4,obj.big.x4,obj.big.y4,obj.small.x4,obj.small.y4);
+  plot(1,obj.big.x1,obj.big.y1,obj.small.x1,obj.small.y1);
+  plot(2,obj.big.x2,obj.big.y2,obj.small.x2,obj.small.y2);
+  plot(3,obj.big.x3,obj.big.y3,obj.small.x3,obj.small.y3);
+  plot(5,obj.small.x3,obj.small.y3,obj.small.x1,obj.small.y1);
+  plot(5,obj.small.x2,obj.small.y2,obj.small.x4,obj.small.y4);
+}
+if(start>=180 && start<270){
+  plot(3,obj.big.x3,obj.big.y3,obj.small.x3,obj.small.y3);
+  plot(2,obj.big.x2,obj.big.y2,obj.small.x2,obj.small.y2);
+  plot(4,obj.big.x4,obj.big.y4,obj.small.x4,obj.small.y4);
+  plot(1,obj.big.x1,obj.big.y1,obj.small.x1,obj.small.y1);
+  plot(5,obj.small.x3,obj.small.y3,obj.small.x1,obj.small.y1);
+  plot(5,obj.small.x2,obj.small.y2,obj.small.x4,obj.small.y4);
+}
+if(start>=270 && start<360){
+  plot(2,obj.big.x2,obj.big.y2,obj.small.x2,obj.small.y2);
+  plot(1,obj.big.x1,obj.big.y1,obj.small.x1,obj.small.y1);
+  plot(3,obj.big.x3,obj.big.y3,obj.small.x3,obj.small.y3);
+  plot(4,obj.big.x4,obj.big.y4,obj.small.x4,obj.small.y4);
+  plot(5,obj.small.x3,obj.small.y3,obj.small.x1,obj.small.y1);
+  plot(5,obj.small.x2,obj.small.y2,obj.small.x4,obj.small.y4);
+}
 
 
-// plot('r',secondObj.middle.x,secondObj.middle.y,secondObj.right.x,secondObj.right.y);
-// plot('l',secondObj.middle.x,secondObj.middle.y,secondObj.left.x,secondObj.left.y);
-plot('r',lastObj.topMiddle.x,lastObj.topMiddle.y,lastObj.topRight.x,lastObj.topRight.y);
-plot('l',lastObj.topMiddle.x,lastObj.topMiddle.y,lastObj.topLeft.x,lastObj.topLeft.y);
-plot('r',lastObj.bottomMiddle.x,lastObj.bottomMiddle.y,lastObj.bottomRight.x,lastObj.bottomRight.y);
-plot('l',lastObj.bottomMiddle.x,lastObj.bottomMiddle.y,lastObj.bottomLeft.x,lastObj.bottomLeft.y);
-var end = buffer + text + extra;
+
+var end = buffer + text + extra
 console.log(end)
