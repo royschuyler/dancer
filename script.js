@@ -210,6 +210,7 @@ function points(objIn,d,start){
 
 var d = 50;
 var start = 1;
+var start2 = 340;
 
 var t1 = radians(12);
 var t2 = radians(9);
@@ -303,8 +304,8 @@ var obj1 = basePoints(d,start,a1,s1,cy1);
 var obj2 = basePoints(d,start,a2,s2,cy2);
 var objv = basePointsV(d,obj1,obj2);
 
-var obj3 = basePoints(d,start,a3,s3,cy3);
-var obj4 = basePoints(d,start,a4,s4,cy4);
+var obj3 = basePoints(d,start2,a3,s3,cy3);
+var obj4 = basePoints(d,start2,a4,s4,cy4);
 var objv2 = basePointsV(d,obj3,obj4);
 
 var obj = {
@@ -314,9 +315,9 @@ var obj = {
 }
 
 var obj2 = {
-  big: points(obj3,d,start),
-  small: points(obj4,d,start),
-  vertical: points(objv2,d,start)
+  big: points(obj3,d,start2),
+  small: points(obj4,d,start2),
+  vertical: points(objv2,d,start2)
 }
 
 //console.log(obj2)
@@ -457,7 +458,7 @@ if(t1>=0 && t2<=0){
 
 
 if(t3>=0 && t4>=0){
-  if(start>=315 || start<45){
+  if(start22>=315 || start22<45){
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
@@ -465,7 +466,7 @@ if(t3>=0 && t4>=0){
     plot(5,obj2.small.x3,obj2.small.y3,obj2.small.x1,obj2.small.y1);
     plot(5,obj2.small.x2,obj2.small.y2,obj2.small.x4,obj2.small.y4);
   }
-  if(start>=45 && start<135){
+  if(start22>=45 && start22<135){
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
@@ -473,7 +474,7 @@ if(t3>=0 && t4>=0){
     plot(5,obj2.small.x3,obj2.small.y3,obj2.small.x1,obj2.small.y1);
     plot(5,obj2.small.x2,obj2.small.y2,obj2.small.x4,obj2.small.y4);
   }
-  if(start>=135 && start<225){
+  if(start22>=135 && start22<225){
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
@@ -481,7 +482,7 @@ if(t3>=0 && t4>=0){
     plot(5,obj2.small.x3,obj2.small.y3,obj2.small.x1,obj2.small.y1);
     plot(5,obj2.small.x2,obj2.small.y2,obj2.small.x4,obj2.small.y4);
   }
-  if(start>=225 && start<315){
+  if(start2>=225 && start2<315){
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
@@ -492,7 +493,7 @@ if(t3>=0 && t4>=0){
 }
 
 if(t3<=0 && t4<=0){
-  if(start>=315 || start<45){
+  if(start2>=315 || start2<45){
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
@@ -500,7 +501,7 @@ if(t3<=0 && t4<=0){
     plot(5,obj2.big.x3,obj2.big.y3,obj2.big.x1,obj2.big.y1);
     plot(5,obj2.big.x2,obj2.big.y2,obj2.big.x4,obj2.big.y4);
   }
-  if(start>=45 && start<135){
+  if(start2>=45 && start2<135){
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
@@ -508,7 +509,7 @@ if(t3<=0 && t4<=0){
     plot(5,obj2.big.x3,obj2.big.y3,obj2.big.x1,obj2.big.y1);
     plot(5,obj2.big.x2,obj2.big.y2,obj2.big.x4,obj2.big.y4);
   }
-  if(start>=135 && start<225){
+  if(start2>=135 && start2<225){
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
@@ -516,7 +517,7 @@ if(t3<=0 && t4<=0){
     plot(5,obj2.big.x3,obj2.big.y3,obj2.big.x1,obj2.big.y1);
     plot(5,obj2.big.x2,obj2.big.y2,obj2.big.x4,obj2.big.y4);
   }
-  if(start>=225 && start<315){
+  if(start2>=225 && start2<315){
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
@@ -527,25 +528,25 @@ if(t3<=0 && t4<=0){
 }
 
 if(t3>=0 && t4<=0){
-  if(start>=315 || start<45){
+  if(start2>=315 || start2<45){
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
   }
-  if(start>=45 && start<135){
+  if(start2>=45 && start2<135){
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
   }
-  if(start>=135 && start<225){
+  if(start2>=135 && start2<225){
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
     plot(1,obj2.big.x1,obj2.big.y1,obj2.small.x1,obj2.small.y1);
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
   }
-  if(start>=225 && start<315){
+  if(start2>=225 && start2<315){
     plot(2,obj2.big.x2,obj2.big.y2,obj2.small.x2,obj2.small.y2);
     plot(3,obj2.big.x3,obj2.big.y3,obj2.small.x3,obj2.small.y3);
     plot(4,obj2.big.x4,obj2.big.y4,obj2.small.x4,obj2.small.y4);
